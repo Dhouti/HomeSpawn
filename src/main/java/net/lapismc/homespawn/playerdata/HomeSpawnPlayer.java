@@ -182,7 +182,6 @@ public class HomeSpawnPlayer {
     public void showHomesGUI(Player p) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             loadHomesIfEmpty();
-            p.sendMessage(plugin.config.getMessage("Home.GUILoading"));
             new HomeListGUI().showTo(p);
         });
     }
