@@ -23,11 +23,9 @@ import net.lapismc.homespawn.playerdata.HomeSpawnPlayer;
 import net.lapismc.homespawn.util.HomeSpawnDataConverter;
 import net.lapismc.lapiscore.LapisCoreConfiguration;
 import net.lapismc.lapiscore.LapisCorePlugin;
-import net.lapismc.lapiscore.utils.LapisUpdater;
 import net.lapismc.lapiscore.utils.LocationUtils;
 import net.lapismc.lapiscore.utils.Metrics;
 import net.lapismc.lapisui.LapisUI;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -45,7 +43,6 @@ public final class HomeSpawn extends LapisCorePlugin {
     private final Cache<UUID, HomeSpawnPlayer> players = CacheBuilder.newBuilder()
             .expireAfterAccess(1, TimeUnit.HOURS).build();
     public PrettyTime prettyTime;
-    public LapisUpdater lapisUpdater;
     private HomeSpawnFileWatcher fileWatcher;
 
     @Override
@@ -63,7 +60,6 @@ public final class HomeSpawn extends LapisCorePlugin {
         new HomeSpawnCommands(this);
         new HomeSpawnDataConverter(this);
         new HomeSpawnPlayerData().init(this);
-        checkUpdates();
         new Metrics(this);
         new LapisUI().registerPlugin(this);
         getLogger().info(getDescription().getName() + " v" + getDescription().getVersion() + " has been enabled");
@@ -80,28 +76,6 @@ public final class HomeSpawn extends LapisCorePlugin {
             player.cancelTeleport();
         }
         getLogger().info(getDescription().getName() + " has been disabled");
-    }
-
-    private void checkUpdates() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-            lapisUpdater = new LapisUpdater(this, "HomeSpawn", "LapisPlugins", "HomeSpawn", "master");
-            //check for an update
-            if (lapisUpdater.checkUpdate()) {
-                //if there in an update but download is disabled and notification is enabled then notify in console
-                if (getConfig().getBoolean("Update.NotifyConsole") && !getConfig().getBoolean("Update.Download")) {
-                    getLogger().info(config.getMessage("Update.Available"));
-                } else if (getConfig().getBoolean("Update.Download")) {
-                    //if downloading updates is enabled then download it and notify console
-                    lapisUpdater.downloadUpdate();
-                    getLogger().info(config.getMessage("Update.Downloading"));
-                }
-            } else {
-                //if there is no update and notify is enabled then notify console that there was no update
-                if (getConfig().getBoolean("UpdateNotification")) {
-                    getLogger().info(config.getMessage("Update.NotAvailable"));
-                }
-            }
-        });
     }
 
     public HomeSpawnPlayer getPlayer(UUID uuid) {

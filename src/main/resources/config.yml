@@ -5,7 +5,7 @@ Update:
   # Should updates be automatically downloaded and installed
   Download: false
   # Should console be notified if an update is available, this wont happen if download is true
-  NotifyConsole: true
+  NotifyConsole: false
 
 # Should the file watcher be enabled, if true config files will be reloaded when edited
 FileWatcher: true

@@ -21,7 +21,7 @@ import net.lapismc.lapiscore.permissions.LapisPermission;
 public enum Permission {
 
     Homes(new Homes()), TeleportDelay(new TeleportDelay()), Spawn(new Spawn()), SetSpawn(new SetSpawn()),
-    DeleteSpawn(new DeleteSpawn()), CanUpdate(new CanUpdate()), CanReload(new CanReload()), CanViewPlayerStats(new CanViewPlayerStats());
+    DeleteSpawn(new DeleteSpawn()), CanReload(new CanReload()), CanViewPlayerStats(new CanViewPlayerStats());
 
     private final LapisPermission permission;
 
@@ -65,13 +65,6 @@ public enum Permission {
         //Allows the player to delete spawn
         DeleteSpawn() {
             super("DeleteSpawn");
-        }
-    }
-
-    private static class CanUpdate extends LapisPermission {
-        //Allows the player to update the plugin
-        CanUpdate() {
-            super("CanUpdate");
         }
     }
 

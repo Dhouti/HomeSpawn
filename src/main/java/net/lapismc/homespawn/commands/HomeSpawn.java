@@ -41,9 +41,7 @@ public class HomeSpawn extends HomeSpawnCommand {
         if (args.length == 0) {
             displayPluginInfo(sender);
         } else {
-            if (args[0].equalsIgnoreCase("update")) {
-                update(sender);
-            } else if (args[0].equalsIgnoreCase("reload")) {
+            if (args[0].equalsIgnoreCase("reload")) {
                 reload(sender);
             } else if (args[0].equalsIgnoreCase("help")) {
                 displayHelp(sender);
@@ -52,21 +50,6 @@ public class HomeSpawn extends HomeSpawnCommand {
             } else {
                 sendMessage(sender, "Help.Homespawn");
             }
-        }
-    }
-
-    private void update(CommandSender sender) {
-        if (sender instanceof Player) {
-            if (isNotPermitted(((Player) sender).getUniqueId(), Permission.CanUpdate)) {
-                sendMessage(sender, "Error.NotPermitted");
-                return;
-            }
-        }
-        if (plugin.lapisUpdater.checkUpdate()) {
-            plugin.lapisUpdater.downloadUpdate();
-            sendMessage(sender, "Update.Downloading");
-        } else {
-            sendMessage(sender, "Update.NotAvailable");
         }
     }
 
